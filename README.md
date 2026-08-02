@@ -1,11 +1,26 @@
-# 📍 Mzumbe GPS Location Tracking System
+# Mzumbe GPS Location Tracking System
 
 A web-based GPS field attachment supervision system for Mzumbe University.
 Built with React.js, PHP, and PostgreSQL.
 
 ---
 
-## 🧰 Prerequisites
+## Overview
+
+Traditional field attachment supervision relies on manual visits and paperwork, making it difficult for supervisors to monitor students consistently throughout their placement period. This system solves that by providing live location tracking, visit logging, and automated reporting — giving supervisors a clear, real-time view of where students are and how their attachment is progressing.
+
+## Features
+
+- Role-based access — separate dashboards for Admin, Supervisor, and Student
+- Real-time location tracking — live GPS polling displayed on an interactive map
+- Visit logging — supervisors can log and track physical visits to placement sites
+- Assessment management — record and manage student performance during attachment
+- PDF report generation — export supervision reports for accountability
+- Secure authentication — JWT-based auth with protected routes
+
+---
+
+## Prerequisites
 
 Make sure you have the following installed before you begin:
 
@@ -18,7 +33,7 @@ Make sure you have the following installed before you begin:
 
 ---
 
-## ⚙️ Backend Setup (PHP + PostgreSQL)
+## Backend Setup (PHP + PostgreSQL)
 
 ### 1. Place backend files
 
@@ -30,7 +45,7 @@ C:\xampp\htdocs\Mzumbe-GPS-PHP\backend\
 
 ### 2. Enable PostgreSQL extension
 
-Open `C:\xampp\php\php.ini` and make sure this line is **uncommented**:
+Open `C:\xampp\php\php.ini` and make sure this line is uncommented:
 
 ```ini
 extension=pdo_pgsql
@@ -55,13 +70,13 @@ define('CLIENT_URL',  'http://localhost:5173');
 
 ### 4. Set up the database
 
-Open **pgAdmin** and run these SQL scripts **in order**:
+Open pgAdmin and run these SQL scripts in order:
 
 ```
-1. database.sql          ← Creates all tables
-2. admin_setup.sql       ← Adds admin role constraint
-3. add_phone.sql         ← Adds phone column
-4. location_history.sql  ← Creates location history table
+1. database.sql          - Creates all tables
+2. admin_setup.sql       - Adds admin role constraint
+3. add_phone.sql         - Adds phone column
+4. location_history.sql  - Creates location history table
 ```
 
 ### 5. Create the default admin account
@@ -72,17 +87,13 @@ Visit this URL in your browser:
 http://localhost/Mzumbe-GPS-PHP/backend/set_admin.php
 ```
 
-You should see a success message. **Delete** `set_admin.php` after this step.
+You should see a success message. Delete `set_admin.php` after this step.
 
-Default admin credentials:
-```
-Email:    admin@mzumbe.ac.tz
-Password: Admin@2026
-```
+The admin account is created with credentials defined in `set_admin.php` — change the password immediately after your first login.
 
 ---
 
-## 🖥️ Frontend Setup (React.js)
+## Frontend Setup (React.js)
 
 ### 1. Navigate to the frontend folder
 
@@ -116,16 +127,16 @@ http://localhost:5173
 
 ---
 
-## 🚀 Running the System
+## Running the System
 
-1. Open XAMPP Control Panel → Start Apache
+1. Open XAMPP Control Panel and start Apache
 2. Make sure PostgreSQL service is running
 3. Run `npm run dev` inside the frontend folder
 4. Go to `http://localhost:5173` in Google Chrome
 
 ---
 
-## 👥 User Roles
+## User Roles
 
 | Role | Created By |
 |---|---|
@@ -133,54 +144,53 @@ http://localhost:5173
 | Supervisor | Admin dashboard |
 | Student | Admin dashboard |
 
-> Students and Supervisors **cannot self-register**.
-> All accounts are created by the Administrator.
+Students and Supervisors cannot self-register. All accounts are created by the Administrator.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Mzumbe-GPS-PHP/
 ├── backend/
-│   ├── config/          ← DB credentials and JWT settings
-│   ├── controllers/     ← Request handlers (Auth, Admin, Location...)
-│   ├── middleware/      ← JWT authentication guard
-│   ├── models/          ← Database query methods
-│   ├── routes/api.php   ← All API route mappings
-│   ├── utils/           ← JWT and Response helpers
-│   ├── index.php        ← App entry point + CORS headers
+│   ├── config/          - DB credentials and JWT settings
+│   ├── controllers/     - Request handlers (Auth, Admin, Location...)
+│   ├── middleware/      - JWT authentication guard
+│   ├── models/          - Database query methods
+│   ├── routes/api.php   - All API route mappings
+│   ├── utils/           - JWT and Response helpers
+│   ├── index.php        - App entry point + CORS headers
 │   ├── database.sql
 │   ├── admin_setup.sql
 │   ├── add_phone.sql
 │   └── location_history.sql
 └── frontend/
     ├── src/
-    │   ├── components/  ← React pages and UI components
-    │   ├── context/     ← AuthContext (global user state)
-    │   └── services/    ← API call functions (Axios)
+    │   ├── components/  - React pages and UI components
+    │   ├── context/     - AuthContext (global user state)
+    │   └── services/    - API call functions (Axios)
     ├── package.json
     └── vite.config.js
 ```
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Problem | Solution |
 |---|---|
 | `ERR_CONNECTION_REFUSED` | Start Apache in XAMPP Control Panel |
 | `pdo_pgsql` extension error | Uncomment `extension=pdo_pgsql` in `php.ini` and restart Apache |
 | Wrong password on admin login | Re-run `set_admin.php` in the browser |
-| Map not loading | Check internet connection — Leaflet needs OpenStreetMap |
+| Map not loading | Check internet connection - Leaflet needs OpenStreetMap |
 | GPS not working | Use Google Chrome and allow location permission when prompted |
 | Port 80 in use | Change Apache port to 8080 in `httpd.conf`, update `CLIENT_URL` |
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
-- All API routes are protected with **JWT authentication**
+- All API routes are protected with JWT authentication
 - Passwords use bcrypt hashing (cost factor 12)
 - All queries use PDO prepared statements to prevent SQL injection
 - Always delete `set_admin.php` after creating the admin account
@@ -188,4 +198,4 @@ Mzumbe-GPS-PHP/
 ---
 
 Developer: Ability M. Johnbosco
-Programme: BSc. Information Technology and Systems — Mzumbe University, 2026
+Programme: BSc. Information Technology and Systems - Mzumbe University, 2026
