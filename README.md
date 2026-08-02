@@ -40,7 +40,7 @@ Make sure you have the following installed before you begin:
 Copy the `backend/` folder into your XAMPP htdocs directory:
 
 ```
-C:\xampp\htdocs\Mzumbe-GPS-PHP\backend\
+C:\xampp\htdocs\gps-tracking-system\backend\
 ```
 
 ### 2. Enable PostgreSQL extension
@@ -84,7 +84,7 @@ Open pgAdmin and run these SQL scripts in order:
 Visit this URL in your browser:
 
 ```
-http://localhost/Mzumbe-GPS-PHP/backend/set_admin.php
+http://localhost/gps-tracking-system/backend/set_admin.php
 ```
 
 You should see a success message. Delete `set_admin.php` after this step.
@@ -151,7 +151,7 @@ Students and Supervisors cannot self-register. All accounts are created by the A
 ## Project Structure
 
 ```
-Mzumbe-GPS-PHP/
+gps-tracking-system/
 ├── backend/
 │   ├── config/          - DB credentials and JWT settings
 │   ├── controllers/     - Request handlers (Auth, Admin, Location...)
