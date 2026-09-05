@@ -7,7 +7,8 @@ import Login                             from './components/auth/Login';
 import StudentDashboard                  from './components/student/StudentDashboard';
 import SupervisorDashboard               from './components/supervisor/SupervisorDashboard';
 import LocationHistory                   from './components/supervisor/LocationHistory';
-import AdminDashboard                    from './components/admin/AdminDashboard';
+import AdminDashboard                    from './components/Admin/AdminDashboard';
+import InstitutionSettings               from './components/Admin/InstitutionSettings';
 import Report                            from './components/supervisor/Report';
 import Profile                           from './components/shared/Profile';
 import PrivateRoute                      from './components/shared/PrivateRoute';
@@ -26,9 +27,13 @@ function AppRoutes() {
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/login"   element={<Login />} />
 
+            {/* Admin */}
             <Route path="/admin"
                 element={<PrivateRoute allowedRole="admin"><AdminDashboard /></PrivateRoute>} />
+            <Route path="/admin/settings"
+                element={<PrivateRoute allowedRole="admin"><InstitutionSettings /></PrivateRoute>} />
 
+            {/* Supervisor */}
             <Route path="/supervisor"
                 element={<PrivateRoute allowedRole="supervisor"><SupervisorDashboard /></PrivateRoute>} />
             <Route path="/location-history"
@@ -36,9 +41,11 @@ function AppRoutes() {
             <Route path="/report"
                 element={<PrivateRoute allowedRole="supervisor"><Report /></PrivateRoute>} />
 
+            {/* Student */}
             <Route path="/student"
                 element={<PrivateRoute allowedRole="student"><StudentDashboard /></PrivateRoute>} />
 
+            {/* Shared */}
             <Route path="/profile"
                 element={<PrivateRoute><Profile /></PrivateRoute>} />
 
@@ -49,7 +56,6 @@ function AppRoutes() {
 
 function App() {
     return (
-        // SettingsProvider wraps everything — settings available everywhere
         <SettingsProvider>
             <AuthProvider>
                 <BrowserRouter>

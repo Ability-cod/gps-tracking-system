@@ -39,7 +39,7 @@ function Navbar() {
                     <span>📍</span>
                 )}
                 <span className="navbar__brand-text">
-                    {settings.name} Tracker
+                    {settings.name}
                 </span>
                 {user?.role === 'admin' && (
                     <span style={{

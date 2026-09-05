@@ -12,8 +12,10 @@ require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 $method   = $_SERVER['REQUEST_METHOD'];
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = '';
-$path     = str_replace($basePath, '', $fullPath);
+$basePath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+$path     = $basePath !== '' && str_starts_with($fullPath, $basePath)
+    ? substr($fullPath, strlen($basePath))
+    : $fullPath;
 if (empty($path)) $path = '/';
 
 // ── SETTINGS (public read, admin write) ───────────────────────
