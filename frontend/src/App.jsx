@@ -1,15 +1,16 @@
 // frontend/src/App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import WelcomePage from './components/WelcomePage';
-import Login from './components/auth/Login';
-import StudentDashboard from './components/student/StudentDashboard';
-import SupervisorDashboard from './components/supervisor/SupervisorDashboard';
-import LocationHistory from './components/supervisor/LocationHistory';
-import AdminDashboard from './components/admin/AdminDashboard';
-import Report from './components/supervisor/Report';
-import Profile from './components/shared/Profile';
-import PrivateRoute from './components/shared/PrivateRoute';
+import { AuthProvider, useAuth }         from './context/AuthContext';
+import { SettingsProvider }              from './context/SettingsContext';
+import WelcomePage                       from './components/WelcomePage';
+import Login                             from './components/auth/Login';
+import StudentDashboard                  from './components/student/StudentDashboard';
+import SupervisorDashboard               from './components/supervisor/SupervisorDashboard';
+import LocationHistory                   from './components/supervisor/LocationHistory';
+import AdminDashboard                    from './components/admin/AdminDashboard';
+import Report                            from './components/supervisor/Report';
+import Profile                           from './components/shared/Profile';
+import PrivateRoute                      from './components/shared/PrivateRoute';
 
 function RootRedirect() {
     const { user } = useAuth();
@@ -22,35 +23,25 @@ function RootRedirect() {
 function AppRoutes() {
     return (
         <Routes>
-            {/* Welcome page — first thing user sees */}
             <Route path="/welcome" element={<WelcomePage />} />
+            <Route path="/login"   element={<Login />} />
 
-            {/* Login */}
-            <Route path="/login" element={<Login />} />
-
-            {/* Admin */}
             <Route path="/admin"
                 element={<PrivateRoute allowedRole="admin"><AdminDashboard /></PrivateRoute>} />
 
-            {/* Supervisor */}
             <Route path="/supervisor"
                 element={<PrivateRoute allowedRole="supervisor"><SupervisorDashboard /></PrivateRoute>} />
-
             <Route path="/location-history"
                 element={<PrivateRoute allowedRole="supervisor"><LocationHistory /></PrivateRoute>} />
-
             <Route path="/report"
                 element={<PrivateRoute allowedRole="supervisor"><Report /></PrivateRoute>} />
 
-            {/* Student */}
             <Route path="/student"
                 element={<PrivateRoute allowedRole="student"><StudentDashboard /></PrivateRoute>} />
 
-            {/* Profile — all roles */}
             <Route path="/profile"
                 element={<PrivateRoute><Profile /></PrivateRoute>} />
 
-            {/* Catch all */}
             <Route path="*" element={<RootRedirect />} />
         </Routes>
     );
@@ -58,11 +49,14 @@ function AppRoutes() {
 
 function App() {
     return (
-        <AuthProvider>
-            <BrowserRouter>
-                <AppRoutes />
-            </BrowserRouter>
-        </AuthProvider>
+        // SettingsProvider wraps everything — settings available everywhere
+        <SettingsProvider>
+            <AuthProvider>
+                <BrowserRouter>
+                    <AppRoutes />
+                </BrowserRouter>
+            </AuthProvider>
+        </SettingsProvider>
     );
 }
 

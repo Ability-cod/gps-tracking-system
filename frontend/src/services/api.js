@@ -1,8 +1,7 @@
 // frontend/src/services/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost/Mzumbe-GPS-PHP/backend';
-
+const API_BASE_URL = 'http://localhost/gps-tracking-system/backend';
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
