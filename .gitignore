@@ -1,2 +1,13 @@
-node_modules/ 
-vendor/ 
+# Backend — never push these to GitHub
+backend/config/config.php
+backend/set_admin.php
+ 
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+ 
+# System files
+.DS_Store
+Thumbs.db

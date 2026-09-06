@@ -1,40 +1,37 @@
 // frontend/src/services/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost/gps-tracking-system/backend';
+// Uses VITE_API_URL env variable in production (Railway URL)
+// Falls back to localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost/gps-tracking-system/backend';
+
 const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  },
-  timeout: 15000,
-  withCredentials: false,
+    baseURL: API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
-// Ongeza token kwa kila request
-api.interceptors.request.use(
-  (config) => {
+// Attach JWT token to every request automatically
+api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-  },
-  (error) => Promise.reject(error)
-);
+});
 
-// Shughulikia token iliyoisha
+// Handle expired token — redirect to login
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
 );
 
 export default api;
