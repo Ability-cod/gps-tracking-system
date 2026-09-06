@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: gps-tracking-backend
+    runtime: php
+    buildCommand: ""
+    startCommand: php -S 0.0.0.0:$PORT index.php
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRY
+        sync: false
+      - key: CLIENT_URL
+        sync: false
