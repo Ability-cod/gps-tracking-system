@@ -10,7 +10,7 @@ import LocationHistory                   from './components/supervisor/LocationH
 import AdminDashboard                    from './components/Admin/AdminDashboard';
 import InstitutionSettings               from './components/Admin/InstitutionSettings';
 import Report                            from './components/supervisor/Report';
-import Profile                           from './components/shared/Profile';
+import Profile                           from './components/shared/profile';
 import PrivateRoute                      from './components/shared/PrivateRoute';
 
 function RootRedirect() {
