@@ -12,8 +12,18 @@ require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 $method   = $_SERVER['REQUEST_METHOD'];
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
-$path     = $basePath !== '' && str_starts_with($fullPath, $basePath)
+// On Render/Docker — index.php is the entry point, path starts from /
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// If running via php -S or Docker Apache, basePath should be empty
+$basePath = (strpos($requestUri, $scriptName) === 0) 
+    ? rtrim($scriptName, '/') 
+    : '';
+
+$path = $basePath ? str_replace($basePath, '', $requestUri) : $requestUri;
+if (empty($path)) $path = '/';
+$path = $basePath !== '' && str_starts_with($fullPath, $basePath)
     ? substr($fullPath, strlen($basePath))
     : $fullPath;
 if (empty($path)) $path = '/';
